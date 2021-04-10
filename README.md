@@ -10,11 +10,82 @@ This repository contains a proof-by-concept implementation in MATLAB of a [new m
 This implementation was developed by Yingkai Song.
 
 # Method outline
-to be written
+This method computes novel ODE relaxations by constructing and solving an auxiliary parametric ODE system with embedded convex optimization problems, whose objective functions employ convex and concave relaxations of the original right-hand side **f**. The required **p**–independent state bounds for **x** are constructed automatically via operator overloading using Harrison's bounding method (1977). The relaxations of **f** are constructed automatically via operator overloading using the McCormick relaxation method (McCormick (1976)). The new ODE relaxations are guaranteed to be at least as tight as the Scott–Barton relaxations (2013), and thereby improve bounding for an overarching global optimization method. Refer to [Song and Khan]() for more details.  
 
 # Usage
-to be written
+
+The files `example1.m` and `example2.m` demonstrate the usage of this implementation. This implementation was developed and tested using MATLAB v9.6.0.1072779 (R2019a).
+
+## Required inputs
+
+This implementation applies to any parametric ODEs with factorable initial-condition and right-hand side functions. Supported operators in these functions are `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer between 2 and 21. This implementation also allows user-chosen MATLAB ODE solvers and tolerance settings. The following quantities and functions are required from users:
+
+* `pL,pU`: lower and upper bounds of uncertain parameters
+* `p`: parameter values at which relaxations will be computed
+* `tspan`: time horizon of the original parametric ODEs
+* `original_initial_value(p)`: the initial-condition function of the original parametric ODEs
+* `original_RHS(t,p,x,i)`: i<sup>th</sup> component of the original right-hand side function
+* `ODE_solver`: user-chosen MATLAB ODE solvers
+* `ODE_solver_options`: user-defined MATLAB ODE solver options
+* `fmincon_options`: user-defined MATLAB options of the NLP solver `fmincon`
+
+### Caution
+
+* Defining the functions `original_initial_value` and `original_RHS` above should only involve element-wise operators, such as `.*`, `./`, and `.^`. Matrix operators such as `*`, `/`, and `^` are not supported.
+* If `original_initial_value` is independent of `p`, e.g., `original_initial_value(p)=0.82`, then trivial p-dependence must be added, e.g., `original_initial_value(p)=0.82+0.*p`. This allows operator overloading to access the initial condition.
+* This implementation relies on valid Harrison state bounds. Thus, if Harrison bounds explode for the given parametric ODEs, this implementation cannot yield valid state relaxations. 
+
+## Computing state relaxations
+
+Add the "functions" folder to the MATLAB path. Then,
+given all the required inputs above, run 
+
+     [t,xAug] = compute_state_relaxations(p,pL,pU,tspan,@original_initial_value,@original_RHS,ODE_solver,ODE_solver_options,fmincon_options)
+Outputs:
+
+* `t`: a vector of time steps employed by the ODE solver for solving the auxiliary ODE system
+* `xAug`: a matrix of the state variables `[xL,xU,xcv,xcc]` at each time step, where `[xL,xU]` are Harrison state bounds, and `[xcv,xcc]` are new state relaxations 
+
+# Implementation contents
+
+This section outlines the `.m` files in the "functions" folder.
+
+## Interval.m
+
+This is an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
+
+## McCormick.m
+
+This is an implementation of generalized McCormick relaxations (Scott et al. (2011)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer between 2 and 21. 
+
+## convex\_relaxation\_of\_original\_RHS.m  
+
+A function `convex_relaxation_of_original_RHS(t,p,x,xL,xU,pL,pU,i,original_RHS)`, which evaluates McCormick convex relaxations of `original_RHS(t,p,x,i)` with `xL<=x<=xU` and `pL<=p<=pU` (see Assumption 3 in the article). 
+
+## concave\_relaxation\_of\_original\_RHS.m  
+
+A function `concave_relaxation_of_original_RHS(t,p,x,xL,xU,pL,pU,i,original_RHS)`, which evaluates McCormick concave relaxations of `original_RHS(t,p,x,i)` with `xL<=x<=xU` and `pL<=p<=pU` (see Assumption 3 in the article). Users are also allowed to replace these McCormick relaxations by other user-defined relaxations. 
+
+## linear\_transformation.m
+
+A function `linear_transformation(alpha,xicv,xicc)`, which performs the linear transformation (7) in the article. 
+
+## optimization\_based\_ODE\_RHS.m
+
+A function `optimization_based_ODE_RHS(t,xAug,p,pL,pU,original_RHS,fmincon_options)`, that constructs the RHS function of the new auxiliary ODE system (4) with embedded (8) in the article.
+
+## compute\_state_relaxations.m
+
+A function 
+
+    compute_state_relaxations(p,pL,pU,tspan,original_initial_value,original_RHS,ODE_solver,ODE_solver_options,fmincon_options)
+that solves the new auxiliary ODE system, yielding valid Harrison state bounds and new state relaxations.
 
 # References
 
 - Y. Song and K.A. Khan, Optimization-based convex relaxations for nonconvex parametric systems of ordinary differential equations, *Math Program*, accepted.
+- J.K. Scott and P.I. Barton, Improved relaxations for the parametric solutions of ODEs using differential inequalities, *J Glob Optim*, **57**(1), 143-176 (2013)
+- J.K. Scott, M.D. Stuber, and P.I. Barton, Generalized McCormick relaxations, *J Glob Optim*, **51**(4), 569-606 (2011)
+- G. Harrison, Dynamic models with uncertain parameters. In: Avula, X. (eds.) Proceedings of the 1<sup>st</sup> International Conference on Mathematical Modeling, **1**, 295-304 (1977)
+- R.E. Moore, *Methods and Applications of Interval Analysis*, SIAM, Philadelphia (1979)
+- G.P. McCormick, Computability of global solutions to factorable nonconvex programs: Part I–Convex underestimating problems, *Math Program*, **10**(1), 147-175 (1976)
