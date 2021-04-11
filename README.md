@@ -70,11 +70,11 @@ A function `concave_relaxation_of_original_RHS(t,p,x,xL,xU,pL,pU,i,original_RHS)
 
 ### [linear\_transformation.m](src/linear_transformation.m)
 
-A function `linear_transformation(alpha,xicv,xicc)`, which performs the linear transformation (7) in the article. 
+A function `linear_transformation(alpha,xicv,xicc)`, which performs the linear transformation **v** described in equation (7) in the article. 
 
 ### [optimization\_based\_ODE\_RHS.m](src/optimization_based_ODE_RHS.m)
 
-A function `optimization_based_ODE_RHS(t,xAug,p,pL,pU,original_RHS,fmincon_options)`, that constructs the RHS function of the new auxiliary ODE system (4) with embedded (8) in the article.
+A function `optimization_based_ODE_RHS(t,xAug,p,pL,pU,original_RHS,fmincon_options)`, that constructs the RHS functions **u**/**o** of the new auxiliary ODE system (4) with embedded (8) in the article.
 
 ### [compute\_state_relaxations.m](src/compute_state_relaxations.m)
 
