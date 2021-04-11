@@ -16,7 +16,7 @@ These new ODE relaxations require **p**–independent state bounds for **x**, wh
 
 # Usage
 
-The files `example1.m` and `example2.m` demonstrate the usage of this implementation. This implementation was developed and tested using MATLAB v9.6.0.1072779 (R2019a). It requires the `fmincon` solver in MATLAB's Optimization Toolbox. Each evaluation of the new relaxation ODE right-hand sides **u**/**o** requires solving convex optimization problems with `fmincon`; a more careful implementation would avoid this by adopting an active-set approach instead.
+The files `example1.m` and `example2.m` in the "test" folder demonstrate the usage of this implementation. This implementation was developed and tested using MATLAB v9.6.0.1072779 (R2019a). It requires the `fmincon` solver in MATLAB's Optimization Toolbox. Each evaluation of the new relaxation ODE right-hand sides **u**/**o** requires solving convex optimization problems with `fmincon`; a more careful implementation would avoid this by adopting an active-set approach instead.
 
 ## Required inputs
 
@@ -39,7 +39,7 @@ This implementation applies to any parametric ODEs with factorable initial-condi
 
 ## Computing state relaxations
 
-Add the "functions" folder to the MATLAB path. Then,
+Add all the contents in the "functions" folder to the MATLAB path. Then,
 given all the required inputs above, run 
 
      [t,xAug] = compute_state_relaxations(p,pL,pU,tspan,@original_initial_value,@original_RHS,ODE_solver,ODE_solver_options,fmincon_options)
@@ -50,9 +50,9 @@ Outputs:
 
 # Implementation contents
 
-This section outlines the various MATLAB scripts in the "functions" folder.
+This section outlines the various MATLAB scripts in the "src" folder.
 
-### Interval.m
+### [Interval.m]()
 
 This is an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
 
