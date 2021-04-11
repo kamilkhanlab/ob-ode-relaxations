@@ -1,4 +1,5 @@
 # Optimization-Based Relaxations of Parametric ODEs
+
 Consider the following parametric system of ordinary differential equations (ODEs). Here *t* denotes time, **p** denotes a vector of system parameters, **x** denotes a vector of system states, and **x**' is the time-derivative of **x**.
 
 > **x**'(*t*,**p**) = **f**(*t*,**p**,**x**(*t*,**p**)),
