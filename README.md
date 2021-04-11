@@ -39,7 +39,7 @@ This implementation applies to any parametric ODEs with factorable initial-condi
 
 ## Computing state relaxations
 
-Add all the contents in the [src](src) folder to the MATLAB path. Then,
+Add all the contents in the [src](src) folder to the MATLAB current folder. Then,
 given all the required inputs above, run 
 
      [t,xAug] = compute_state_relaxations(p,pL,pU,tspan,@original_initial_value,@original_RHS,ODE_solver,ODE_solver_options,fmincon_options)
