@@ -52,34 +52,31 @@ Outputs:
 
 This section outlines the various MATLAB scripts in the "functions" folder.
 
-Interval.m
-: This is an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
-
-#### Interval.m
+### Interval.m
 
 This is an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
 
-#### McCormick.m
+### McCormick.m
 
 This is an implementation of generalized McCormick relaxations (Scott et al. (2011)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer between 2 and 21. 
 
-#### convex\_relaxation\_of\_original\_RHS.m  
+### convex\_relaxation\_of\_original\_RHS.m  
 
 A function `convex_relaxation_of_original_RHS(t,p,x,xL,xU,pL,pU,i,original_RHS)`, which evaluates McCormick convex relaxations of `original_RHS(t,p,x,i)` with `xL<=x<=xU` and `pL<=p<=pU` (see Assumption 3 in the article). 
 
-#### concave\_relaxation\_of\_original\_RHS.m  
+### concave\_relaxation\_of\_original\_RHS.m  
 
 A function `concave_relaxation_of_original_RHS(t,p,x,xL,xU,pL,pU,i,original_RHS)`, which evaluates McCormick concave relaxations of `original_RHS(t,p,x,i)` with `xL<=x<=xU` and `pL<=p<=pU` (see Assumption 3 in the article). Users are also allowed to replace these McCormick relaxations by other user-defined relaxations. 
 
-#### linear\_transformation.m
+### linear\_transformation.m
 
 A function `linear_transformation(alpha,xicv,xicc)`, which performs the linear transformation (7) in the article. 
 
-#### optimization\_based\_ODE\_RHS.m
+### optimization\_based\_ODE\_RHS.m
 
 A function `optimization_based_ODE_RHS(t,xAug,p,pL,pU,original_RHS,fmincon_options)`, that constructs the RHS function of the new auxiliary ODE system (4) with embedded (8) in the article.
 
-#### compute\_state_relaxations.m
+### compute\_state_relaxations.m
 
 A function 
 
