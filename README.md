@@ -46,7 +46,7 @@ given all the required inputs above, run
 Outputs:
 
 * `t`: a vector of time steps employed by the ODE solver for solving the auxiliary ODE system
-* `xAug`: a matrix of the state variables `[xL,xU,xcv,xcc]`, where `[xL,xU]` are Harrison state bounds, and `[xcv,xcc]` are new state relaxations. For a two-state-variable original ODE system, each row of `xAug` represents the numerical values `[x1L,x2L,x1U,x2U,x1cv,x2cv,x1cc,x2cc]` at each time step.  
+* `xAug`: a matrix of the state variables `[xL,xU,xcv,xcc]`, where `[xL,xU]` are Harrison state bounds, and `[xcv,xcc]` are new state relaxations. For a two-state-variable original ODE system, each row of `xAug` represents the numerical values `[x1L,x2L,x1U,x2U,x1cv,x2cv,x1cc,x2cc]` at each time step, similarly for an original system with more state variables.  
 
 # Implementation contents
 
