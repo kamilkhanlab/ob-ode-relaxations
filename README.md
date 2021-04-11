@@ -24,7 +24,7 @@ This implementation applies to any parametric ODEs with factorable initial-condi
 
 * `pL,pU`: lower and upper bounds of parameters **p**
 * `p`: parameter vector at which relaxations will be computed
-* `tspan`: time horizon of the original parametric ODEs
+* `tspan`: time horizon `[t0,tf]` of the original parametric ODEs
 * `original_initial_value(p)`: initial-condition function **x**<sub>0</sub> in the original parametric ODE
 * `original_RHS(t,p,x,i)`: i<sup>th</sup> component of the original right-hand side function **f**
 * `ODE_solver`: user-chosen MATLAB ODE solver
@@ -46,7 +46,7 @@ given all the required inputs above, run
 Outputs:
 
 * `t`: a vector of time steps employed by the ODE solver for solving the auxiliary ODE system
-* `xAug`: a matrix of the state variables `[xL,xU,xcv,xcc]` at each time step, where `[xL,xU]` are Harrison state bounds, and `[xcv,xcc]` are new state relaxations 
+* `xAug`: a matrix of the state variables `[xL,xU,xcv,xcc]`, where `[xL,xU]` are Harrison state bounds, and `[xcv,xcc]` are new state relaxations. For a two-state-variable original ODE system, each row of `xAug` represents the numerical values `[x1L,x2L,x1U,x2U,x1cv,x2cv,x1cc,x2cc]` at each time step.  
 
 # Implementation contents
 
