@@ -98,4 +98,4 @@ that solves the new auxiliary ODE system, yielding valid Harrison state bounds a
 - R.E. Moore, *Methods and Applications of Interval Analysis*, SIAM, Philadelphia (1979)
 - G.P. McCormick, Computability of global solutions to factorable nonconvex programs: Part I–Convex underestimating problems, *Math Program*, **10**(1), 147-175 (1976)
 
-[1]: https://doi.org/
+[1]: #references
