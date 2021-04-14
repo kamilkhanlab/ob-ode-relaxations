@@ -10,6 +10,8 @@ This repository contains a proof-by-concept implementation in MATLAB of a [new m
 
 This implementation was developed by Yingkai Song, and was used in all of the numerical examples in the [accompanying paper][1] except Example 6.
 
+This work was supported by the Natural Sciences and Engineering Research Council of Canada (NSERC) under Grant RGPIN-2017-05944.
+
 # Method outline
 This method computes novel ODE relaxations by constructing and solving an auxiliary parametric ODE system with embedded convex optimization problems, whose objective functions employ convex and concave relaxations of the original right-hand side **f**. These optimal-value functions replace the flattened generalized McCormick relaxations **u**/**o** used in the Scott-Barton ODE relaxations (2013).
 
