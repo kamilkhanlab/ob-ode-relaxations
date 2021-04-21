@@ -72,8 +72,8 @@ return
 ```
 where `x` is a vector and `y` is a scalar, then the following code computes the natural interval extension `yI:=[yL,yU]` of `f` at an interval `xI:=[xL,xU]`. 
 ```Matlab
-% convert xL and xU into a vector of Intervals
-nX = length(x);
+% express xL and xU as a single Interval object xI
+nX = length(xL);
 xI(1:nX) = Interval(0,0);
 for i = 1:nX
     xI(i) = Interval(xL(i), xU(i));
