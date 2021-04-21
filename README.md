@@ -62,11 +62,58 @@ This section outlines the various MATLAB scripts in the [src](src) folder.
 
 ### [Interval.m](src/Interval.m)
 
-This is an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
+This class provides an implementation of natural interval extension (Moore (1979)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer. 
+
+This implementation can be used on its own. For example, if we have a MATLAB function of the form:
+```Matlab
+function y = f(x)
+    % compute y using some combination of the supported operations
+return
+```
+where `x` is a vector and `y` is a scalar, then the following code computes the natural interval extension `yI:=[yL,yU]` of `f` at an interval `xI:=[xL,xU]`. 
+```Matlab
+% convert xL and xU into a vector of Intervals
+nX = length(x);
+xI(1:nX) = Interval(0,0);
+for i = 1:nX
+    xI(i) = Interval(xL(i), xU(i));
+end
+
+% evaluate natural interval extension of f at xI
+yI = f(xI);
+
+% retrieve output bounds yL and yU, for which yL<=f(x)<=yU whenever xL<=x<=xU
+yL = yI.lower;
+yU = yI.upper;
+```
 
 ### [McCormick.m](src/McCormick.m)
 
-This is an implementation of generalized McCormick relaxations (Scott et al. (2011)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer between 2 and 21. 
+This class provides an implementation of generalized McCormick relaxations (Scott et al. (2011)) for factorable functions via operator overloading. Currently supported operators: `-`, `+`, `.*`, `./`, `exp`, `log`, and `x.^n` where `n` is a positive integer between 2 and 21.
+
+This implementation can be used on its own. For example, if we have a MATLAB function of the form:
+```Matlab
+function y = f(x)
+    % compute y using some combination of the supported operations
+return
+```
+where `x` is a vector and `y` is a scalar, then the following code evaluates McCormick convex and concave relaxations of `f` at a point `x` in a box domain `[xL,xU]`. 
+```Matlab
+% express input data as a McCormick object xMC
+nX = length(x);
+xMC(1:nX) = McCormick(0,0,0,0);
+for i = 1:nX
+    xMC(i) = McCormick(xL(i), xU(i), x(i), x(i));
+end
+
+% evaluate McCormick relaxations of f at x on the domain [xL,xU]
+yMC = f(xMC);
+
+% retrieve corresponding convex and concave relaxations of f evaluated at x
+yCv = yMC.convex;
+yCc = yMC.concave;
+```
+
 
 ### [convex\_relaxation\_of\_original\_RHS.m](src/convex_relaxation_of_original_RHS.m)  
 
