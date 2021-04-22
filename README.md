@@ -72,7 +72,7 @@ return
 ```
 where `x` is a vector and `y` is a scalar, then the following code computes the natural interval extension `yI:=[yL,yU]` of `f` at an interval `xI:=[xL,xU]`. 
 ```Matlab
-% express xL and xU as a single Interval object xI
+% express xL and xU as a single vector xI of Interval objects
 nX = length(xL);
 xI(1:nX) = Interval(0,0);
 for i = 1:nX
@@ -99,7 +99,7 @@ return
 ```
 where `x` is a vector and `y` is a scalar, then the following code evaluates McCormick convex and concave relaxations of `f` at a point `x` in a box domain `[xL,xU]`. 
 ```Matlab
-% express input data as a McCormick object xMC
+% express input data as a vector xMC of McCormick objects
 nX = length(x);
 xMC(1:nX) = McCormick(0,0,0,0);
 for i = 1:nX
