@@ -140,7 +140,7 @@ that solves the new auxiliary ODE system, yielding valid Harrison state bounds a
 
 ## References
 
-- Y. Song and K.A. Khan, [Optimization-based convex relaxations for nonconvex parametric systems of ordinary differential equations][1], *Math Program*, accepted.
+- Y. Song and K.A. Khan, [Optimization-based convex relaxations for nonconvex parametric systems of ordinary differential equations][1], *Math Program*, in press.
 - J.K. Scott and P.I. Barton, Improved relaxations for the parametric solutions of ODEs using differential inequalities, *J Glob Optim*, **57**(1), 143-176 (2013)
 - J.K. Scott, M.D. Stuber, and P.I. Barton, Generalized McCormick relaxations, *J Glob Optim*, **51**(4), 569-606 (2011)
 - G. Harrison, Dynamic models with uncertain parameters. In: Avula, X. (eds.) Proceedings of the 1<sup>st</sup> International Conference on Mathematical Modeling, **1**, 295-304 (1977)
