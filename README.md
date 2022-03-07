@@ -6,9 +6,13 @@ Consider the following parametric system of ordinary differential equations (ODE
 > 
 > **x**(*t*<sub>0</sub>,**p**) = **x**<sub>0</sub>(**p**)
 
-This repository contains a proof-by-concept implementation in MATLAB of a [new method by Song and Khan][1] to construct and evaluate useful state relaxations for this ODE system. Roughly, given functions **f** and **x**<sub>0</sub>, a time horizon [*t*<sub>0</sub>,*t*<sub>f</sub>], and parameter bounds [**p**<sup>L</sup>, **p**<sup>U</sup>], this implementation constructs convex underestimators and concave overestimators of each component of the final state **x**(*t*<sub>f</sub>,**p**) with respect to **p** on [**p**<sup>L</sup>, **p**<sup>U</sup>], by generating and solving an auxiliary ODE system. These relaxations enclose the reachable set of the original ODE system, and may be used in deterministic methods for continuous global dynamic optimization.
+This repository contains the following:
 
-This implementation was developed by Yingkai Song, and was used in all of the numerical examples in the [accompanying paper][1] except Example 6.
+- a straightforward MATLAB implementation of interval arithmetic using operator overloading. This automatically computes upper and lower bounds for a composite function (such as **f** above) on a box-shaped domain.
+- a straightforward MATLAB implementation of McCormick relaxations using operator overlaoding. This automatically computes convex and concave relaxations of each component of a composite function (such as **f** above) on a box-shaped domain.
+- a proof-by-concept implementation in MATLAB of a [new method by Song and Khan][1] to construct and evaluate useful state relaxations for the ODE system above. Roughly, given functions **f** and **x**<sub>0</sub>, a time horizon [*t*<sub>0</sub>,*t*<sub>f</sub>], and parameter bounds [**p**<sup>L</sup>, **p**<sup>U</sup>], this implementation constructs convex underestimators and concave overestimators of each component of the final state **x**(*t*<sub>f</sub>,**p**) with respect to **p** on [**p**<sup>L</sup>, **p**<sup>U</sup>], by generating and solving an auxiliary ODE system. These relaxations enclose the reachable set of the original ODE system, and may be used in deterministic methods for continuous global dynamic optimization.
+
+This implementation was developed by Yingkai Song, and was used in all of the numerical examples in the [accompanying paper][1] except Example 6. This repository is tied to the accompanying paper, and will not be updated except for bug fixes.
 
 This work was supported by the Natural Sciences and Engineering Research Council of Canada (NSERC) under Grant RGPIN-2017-05944.
 
