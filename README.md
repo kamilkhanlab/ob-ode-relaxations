@@ -6,18 +6,21 @@ Consider the following parametric system of ordinary differential equations (ODE
 > 
 > **x**(*t*<sub>0</sub>,**p**) = **x**<sub>0</sub>(**p**)
 
-This repository contains the following:
+This repository contains a proof-by-concept implementation in MATLAB of a [new method by Song and Khan][1] to construct and evaluate useful state relaxations for the ODE system above. Roughly, given functions **f** and **x**<sub>0</sub>, a time horizon [*t*<sub>0</sub>,*t*<sub>f</sub>], and parameter bounds [**p**<sup>L</sup>, **p**<sup>U</sup>], this implementation constructs convex underestimators and concave overestimators of each component of the final state **x**(*t*<sub>f</sub>,**p**) with respect to **p** on [**p**<sup>L</sup>, **p**<sup>U</sup>], by generating and solving an auxiliary ODE system. These relaxations enclose the reachable set of the original ODE system, and may be used in deterministic methods for continuous global dynamic optimization.
+
+The following components of this implementation may be used on their own:
 
 - a straightforward MATLAB implementation of interval arithmetic using operator overloading. This automatically computes upper and lower bounds for a composite function (such as **f** above) on a box-shaped domain.
-- a straightforward MATLAB implementation of McCormick relaxations using operator overlaoding. This automatically computes convex and concave relaxations of each component of a composite function (such as **f** above) on a box-shaped domain.
-- a proof-by-concept implementation in MATLAB of a [new method by Song and Khan][1] to construct and evaluate useful state relaxations for the ODE system above. Roughly, given functions **f** and **x**<sub>0</sub>, a time horizon [*t*<sub>0</sub>,*t*<sub>f</sub>], and parameter bounds [**p**<sup>L</sup>, **p**<sup>U</sup>], this implementation constructs convex underestimators and concave overestimators of each component of the final state **x**(*t*<sub>f</sub>,**p**) with respect to **p** on [**p**<sup>L</sup>, **p**<sup>U</sup>], by generating and solving an auxiliary ODE system. These relaxations enclose the reachable set of the original ODE system, and may be used in deterministic methods for continuous global dynamic optimization.
+- a straightforward MATLAB implementation of generalized McCormick relaxation using operator overloading, analogous to [MC++](https://github.com/coin-or/MCpp). This automatically computes convex and concave relaxations of each component of a composite function (such as **f** above) on a box-shaped domain.
 
 This implementation was developed by Yingkai Song, and was used in all of the numerical examples in the [accompanying paper][1] except Example 6. This repository is tied to the accompanying paper, and will not be updated except for bug fixes.
 
 This work was supported by the Natural Sciences and Engineering Research Council of Canada (NSERC) under Grant RGPIN-2017-05944.
 
 ## Method outline
-This method computes novel ODE relaxations by constructing and solving an auxiliary parametric ODE system with embedded convex optimization problems, whose objective functions employ convex and concave relaxations of the original right-hand side **f**. These optimal-value functions replace the flattened generalized McCormick relaxations **u**/**o** used in the Scott-Barton ODE relaxations (2013).
+Interval arithmetic proceeds by replacing each arithmetic operation with corresponding bounding rules (see Moore (1979)), and generalized McCormick relaxation (Scott et al. (2011)) proceeds by appending additional convex relaxation rules to these bounding rules.
+
+A new method by Song and Khan (2021) computes novel ODE relaxations by constructing and solving an auxiliary parametric ODE system with embedded convex optimization problems, whose objective functions employ convex and concave relaxations of the original right-hand side **f**. These optimal-value functions replace the flattened generalized McCormick relaxations **u**/**o** used in the Scott-Barton ODE relaxations (2013).
 
 These new ODE relaxations require **p**–independent state bounds for **x**, which are constructed automatically via operator overloading using Harrison's bounding method (1977). Corresponding relaxations of **f** are constructed automatically via operator overloading using the McCormick relaxation method (McCormick (1976)). The new ODE relaxations are guaranteed to be at least as tight as the Scott–Barton relaxations (2013). Refer to [Song and Khan][1] for more details.  
 
