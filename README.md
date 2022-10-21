@@ -1,10 +1,13 @@
 # ob-ode-relaxations
 
-Consider the following parametric system of ordinary differential equations (ODEs). Here *t* denotes time, **p** denotes a vector of system parameters, **x** denotes a vector of system states, and **x**' is the time-derivative of **x**.
+Consider the following parametric system of ordinary differential equations (ODEs). Here $t$ denotes time, $\mathbf{p}$ denotes a vector of system parameters, $\mathbf{x}$ denotes a vector of system states, and $\dot{\mathbf{x}}$ is the time-derivative of $\mathbf{x}$.
 
-> **x**'(*t*,**p**) = **f**(*t*,**p**,**x**(*t*,**p**)),
-> 
-> **x**(*t*<sub>0</sub>,**p**) = **x**<sub>0</sub>(**p**)
+$$
+\begin{align*}
+\dot{\mathbf{x}}(t,\mathbf{p}) &= \mathbf{f}(t,\mathbf{p},\mathbf{x}(t,\mathbf{p})) \\
+\mathbf{x}(t_0,\mathbf{p}) &= \mathbf{x}_0(\mathbf{p}).
+\end{align*}
+$$
 
 This repository contains a proof-by-concept implementation in MATLAB of a [new method by Song and Khan][1] to construct and evaluate useful state relaxations for the ODE system above. Roughly, given functions **f** and **x**<sub>0</sub>, a time horizon [*t*<sub>0</sub>,*t*<sub>f</sub>], and parameter bounds [**p**<sup>L</sup>, **p**<sup>U</sup>], this implementation constructs convex underestimators and concave overestimators of each component of the final state **x**(*t*<sub>f</sub>,**p**) with respect to **p** on [**p**<sup>L</sup>, **p**<sup>U</sup>], by generating and solving an auxiliary ODE system. These relaxations enclose the reachable set of the original ODE system, and may be used in deterministic methods for continuous global dynamic optimization.
 
@@ -58,10 +61,12 @@ Outputs:
 * `t`: a vector of time steps employed by the ODE solver for solving the auxiliary ODE system
 * `xAug`: a matrix containing Harrison state bounds **x**<sup>L</sup>/**x**<sup>U</sup> of **x** on `[pL,pU]` at each time `t(i)`, and new state relaxations **x**<sup>cv</sup>/**x**<sup>cc</sup> of **x** on `[pL,pU]` at parameter `p` at each time `t(i)`. Row `i` of `xAug` contains the following quantities at time `t(i)` and parameter `p`:
 
-    >    [x<sup>L</sup><sub>1</sub>, ..., x<sup>L</sup><sub>n</sub>,
-    >    x<sup>U</sup><sub>1</sub>, ..., x<sup>U</sup><sub>n</sub>,
-    >    x<sup>cv</sup><sub>1</sub>, ..., x<sup>cv</sup><sub>n</sub>,
-    >    x<sup>cc</sup><sub>1</sub>, ..., x<sup>cc</sup><sub>n</sub>].
+$$
+[x^{\mathrm{L}}_1, \ldots, x^{\mathrm{L}}_n, 
+x^{\mathrm{U}}_1, \ldots, x^{\mathrm{U}}_n,
+x^{\mathrm{cv}}_1, \ldots, x^{\mathrm{cv}}_n,
+x^{\mathrm{cc}}_1, \ldots, x^{\mathrm{cc}}_n].
+$$
 
 ## Implementation contents
 
